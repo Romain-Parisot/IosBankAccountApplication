@@ -8,17 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		1F0A268C2CBEA9C9006F912B /* IosBankAccountApplicationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A268B2CBEA9C9006F912B /* IosBankAccountApplicationApp.swift */; };
-		1F0A268E2CBEA9C9006F912B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A268D2CBEA9C9006F912B /* ContentView.swift */; };
+		1F0A268E2CBEA9C9006F912B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A268D2CBEA9C9006F912B /* LoginView.swift */; };
 		1F0A26932CBEA9CC006F912B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A26922CBEA9CC006F912B /* Preview Assets.xcassets */; };
 		1F0A269C2CBEABF0006F912B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0A269B2CBEABF0006F912B /* HomeView.swift */; };
+		1F386FA02CBFA64C005F4989 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F386F9F2CBFA64C005F4989 /* Assets.xcassets */; };
+		1F386FA22CBFB1A8005F4989 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F386FA12CBFB1A8005F4989 /* TransactionsView.swift */; };
+		1F386FA42CBFBE52005F4989 /* DarkModeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F386FA32CBFBE52005F4989 /* DarkModeKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1F0A26882CBEA9C9006F912B /* IosBankAccountApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IosBankAccountApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F0A268B2CBEA9C9006F912B /* IosBankAccountApplicationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosBankAccountApplicationApp.swift; sourceTree = "<group>"; };
-		1F0A268D2CBEA9C9006F912B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1F0A268D2CBEA9C9006F912B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1F0A26922CBEA9CC006F912B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1F0A269B2CBEABF0006F912B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1F386F9F2CBFA64C005F4989 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
+		1F386FA12CBFB1A8005F4989 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
+		1F386FA32CBFBE52005F4989 /* DarkModeKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +58,11 @@
 			isa = PBXGroup;
 			children = (
 				1F0A268B2CBEA9C9006F912B /* IosBankAccountApplicationApp.swift */,
-				1F0A268D2CBEA9C9006F912B /* ContentView.swift */,
+				1F0A268D2CBEA9C9006F912B /* LoginView.swift */,
 				1F0A269B2CBEABF0006F912B /* HomeView.swift */,
+				1F386FA12CBFB1A8005F4989 /* TransactionsView.swift */,
+				1F386FA32CBFBE52005F4989 /* DarkModeKey.swift */,
+				1F386F9F2CBFA64C005F4989 /* Assets.xcassets */,
 				1F0A26912CBEA9CC006F912B /* Preview Content */,
 			);
 			path = IosBankAccountApplication;
@@ -125,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F386FA02CBFA64C005F4989 /* Assets.xcassets in Resources */,
 				1F0A26932CBEA9CC006F912B /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,7 +147,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F0A269C2CBEABF0006F912B /* HomeView.swift in Sources */,
-				1F0A268E2CBEA9C9006F912B /* ContentView.swift in Sources */,
+				1F386FA22CBFB1A8005F4989 /* TransactionsView.swift in Sources */,
+				1F0A268E2CBEA9C9006F912B /* LoginView.swift in Sources */,
+				1F386FA42CBFBE52005F4989 /* DarkModeKey.swift in Sources */,
 				1F0A268C2CBEA9C9006F912B /* IosBankAccountApplicationApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
