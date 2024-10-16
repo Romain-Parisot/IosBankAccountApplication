@@ -8,6 +8,11 @@ struct HomeView: View {
 
     // Generate random transactions
     let transactions: [Int] = (0..<3).map { _ in Int.random(in: -1000...1000) }
+    
+    // Generate random values for income, spending, and investing
+    let income: Int = Int.random(in: 1000...5000)
+    let spending: Int = Int.random(in: 1000...3000)
+    let investing: Int = Int.random(in: 500...2000)
 
     // Define primary and secondary colors
     private var primaryColor: Color {
@@ -16,6 +21,21 @@ struct HomeView: View {
 
     private var secondaryColor: Color {
         isDarkMode ? .white : .black
+    }
+
+    // Function to determine the size of the circles based on amounts
+    private func circleSize(for amount: Int, maxSize: CGFloat, minSize: CGFloat) -> CGFloat {
+        let maxAmount = max(income, spending, investing) // Find the maximum amount
+        let scaleFactor = maxSize / CGFloat(maxAmount) // Calculate scale factor based on max size
+        let calculatedSize = CGFloat(amount) * scaleFactor // Calculate the circle size
+
+        // Ensure that the size is within the specified limits
+        if calculatedSize < minSize {
+            return minSize // Return the minimum size if calculated size is smaller
+        } else if calculatedSize > maxSize {
+            return maxSize // Ensure the size does not exceed max size
+        }
+        return calculatedSize // Return calculated size
     }
 
     var body: some View {
@@ -68,6 +88,82 @@ struct HomeView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 16)
+
+                // Expense, income, investment section
+                Text("Wallet Visualizer")
+                    .font(.headline)
+                    .foregroundColor(primaryColor)
+                    .padding(.horizontal, 16)
+                GeometryReader { geometry in
+                    let maxCircleSize: CGFloat = 140 // Set the maximum size for the largest circle
+                    let minCircleSize: CGFloat = maxCircleSize / 2 // Set the minimum size for the circles
+                    let incomeSize = circleSize(for: income, maxSize: maxCircleSize, minSize: minCircleSize)
+                    let spendingSize = circleSize(for: spending, maxSize: maxCircleSize, minSize: minCircleSize)
+                    let investingSize = circleSize(for: investing, maxSize: maxCircleSize, minSize: minCircleSize)
+
+                    ZStack {
+                        // Income Circle
+                        Circle()
+                            .fill(Color.green)
+                            .frame(width: incomeSize, height: incomeSize)
+                            .overlay(
+                                VStack {
+                                    Spacer() // Pushes text to center vertically
+                                    Text("Income")
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center) // Center align the text
+                                    Text("\(income)")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center) // Center align the text
+                                    Spacer() // Pushes text to center vertically
+                                }
+                            )
+                            .position(x: geometry.size.width / 2, y: geometry.size.height * 0.3)
+
+                        // Spending Circle
+                        Circle()
+                            .fill(Color.red)
+                            .frame(width: spendingSize, height: spendingSize)
+                            .overlay(
+                                VStack {
+                                    Spacer()
+                                    Text("Expenses")
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center) // Center align the text
+                                    Text("\(spending)")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center) // Center align the text
+                                    Spacer()
+                                }
+                            )
+                            .position(x: geometry.size.width * 0.2, y: geometry.size.height * 0.7)
+
+                        // Investing Circle
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: investingSize, height: investingSize)
+                            .overlay(
+                                VStack {
+                                    Spacer()
+                                    Text("Investments")
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center) // Center align the text
+                                    Text("\(investing)")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center) // Center align the text
+                                    Spacer()
+                                }
+                            )
+                            .position(x: geometry.size.width * 0.8, y: geometry.size.height * 0.7)                    }
+                    .frame(maxHeight: 120) // Set a max height for the circle section
+                    .padding(.horizontal, 16) // Add horizontal padding
+                }
 
                 // Transactions section
                 VStack(alignment: .leading, spacing: 8) {
@@ -196,14 +292,6 @@ struct HomeView: View {
         } else {
             return .gray
         }
-    }
-}
-
-struct AllTransactionsView: View {
-    var body: some View {
-        Text("All Transactions Page")
-            .foregroundColor(.white)
-            .background(Color.black.edgesIgnoringSafeArea(.all))
     }
 }
 
