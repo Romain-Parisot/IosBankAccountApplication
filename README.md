@@ -4,6 +4,7 @@
 
 The IosBankAccountApplication is a financial management app project designed during an IOS course in my IIM formation. 
 The goal was to create a simple app to familiarize with xCode and Swift, so i made an app to allow users to track their transactions, visualize their income and expenses, and manage their financial data.
+See a quick demo of the application: https://youtu.be/XB-c0ljqEkY
 
 ## Features
 
