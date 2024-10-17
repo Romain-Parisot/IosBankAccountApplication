@@ -14,6 +14,8 @@
 		1F386FA02CBFA64C005F4989 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F386F9F2CBFA64C005F4989 /* Assets.xcassets */; };
 		1F386FA22CBFB1A8005F4989 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F386FA12CBFB1A8005F4989 /* TransactionsView.swift */; };
 		1F3C20702CC0F57200AEC422 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C206F2CC0F57200AEC422 /* Tab.swift */; };
+		1FA1351A2CC1413700F97C63 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA135192CC1413700F97C63 /* TransactionModel.swift */; };
+		1FA1351C2CC14A2400F97C63 /* gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1FA1351B2CC14A2400F97C63 /* gitignore */; };
 		1FC544952CBFEF6C0043E03A /* MarketDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC544942CBFEF6C0043E03A /* MarketDataView.swift */; };
 		1FC544972CBFF9CA0043E03A /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC544962CBFF9CA0043E03A /* HeaderView.swift */; };
 		1FC5449D2CC00A760043E03A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC5449C2CC00A750043E03A /* MainView.swift */; };
@@ -30,6 +32,8 @@
 		1F386F9F2CBFA64C005F4989 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		1F386FA12CBFB1A8005F4989 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 		1F3C206F2CC0F57200AEC422 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		1FA135192CC1413700F97C63 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		1FA1351B2CC14A2400F97C63 /* gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gitignore; sourceTree = "<group>"; };
 		1FC544942CBFEF6C0043E03A /* MarketDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketDataView.swift; sourceTree = "<group>"; };
 		1FC544962CBFF9CA0043E03A /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		1FC5449C2CC00A750043E03A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainView.swift; path = ../MainView.swift; sourceTree = "<group>"; };
@@ -67,9 +71,11 @@
 		1F0A268A2CBEA9C9006F912B /* IosBankAccountApplication */ = {
 			isa = PBXGroup;
 			children = (
+				1FA1351B2CC14A2400F97C63 /* gitignore */,
 				1F0A268B2CBEA9C9006F912B /* IosBankAccountApplicationApp.swift */,
 				1F0A268D2CBEA9C9006F912B /* LoginView.swift */,
 				1FC544962CBFF9CA0043E03A /* HeaderView.swift */,
+				1FA135192CC1413700F97C63 /* TransactionModel.swift */,
 				1FD28D5B2CC101EC0038DDC3 /* DarkModeKey.swift */,
 				1FC544942CBFEF6C0043E03A /* MarketDataView.swift */,
 				1FD28D5D2CC10B7C0038DDC3 /* MenuView.swift */,
@@ -150,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F386FA02CBFA64C005F4989 /* Assets.xcassets in Resources */,
+				1FA1351C2CC14A2400F97C63 /* gitignore in Resources */,
 				1F0A26932CBEA9CC006F912B /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FC544952CBFEF6C0043E03A /* MarketDataView.swift in Sources */,
+				1FA1351A2CC1413700F97C63 /* TransactionModel.swift in Sources */,
 				1FC5449D2CC00A760043E03A /* MainView.swift in Sources */,
 				1F0A269C2CBEABF0006F912B /* HomeView.swift in Sources */,
 				1FD28D5C2CC101EC0038DDC3 /* DarkModeKey.swift in Sources */,

@@ -3,27 +3,15 @@ import SwiftUI
 struct MainView: View {
     @Binding var selectedTab: Tab?
     @Binding var isMenuVisible: Bool?
-    @Environment(\.isDarkMode) private var isDarkMode
-
-    @State private var isMenuAnimating: Bool = false // New state for controlling animation
+    @Binding var isLoggedIn: Bool
+    @State private var isDarkMode: Bool = false
+    @State private var isMenuAnimating: Bool = false
 
     var body: some View {
-        ZStack {
-            VStack {
-                HeaderView(
-                    selectedTab: Binding(
-                        get: { selectedTab ?? .home },
-                        set: { selectedTab = $0 }
-                    ),
-                    isMenuVisible: Binding(
-                        get: { isMenuVisible ?? false },
-                        set: { isMenuVisible = $0 }
-                    ),
-                    isDarkMode: isDarkMode
-                )
-
-                if selectedTab == .home {
-                    HomeView(
+        NavigationView {
+            ZStack {
+                VStack {
+                    HeaderView(
                         selectedTab: Binding(
                             get: { selectedTab ?? .home },
                             set: { selectedTab = $0 }
@@ -31,47 +19,57 @@ struct MainView: View {
                         isMenuVisible: Binding(
                             get: { isMenuVisible ?? false },
                             set: { isMenuVisible = $0 }
-                        )
-                    )
-                } else if selectedTab == .market {
-                    MarketDataView(
-                        selectedTab: Binding(
-                            get: { selectedTab ?? .home },
-                            set: { selectedTab = $0 }
                         ),
-                        isMenuVisible: Binding(
-                            get: { isMenuVisible ?? false },
-                            set: { isMenuVisible = $0 }
-                        )
+                        isDarkMode: $isDarkMode
                     )
-                }
-            }
-            .background(isDarkMode ? Color.white : Color.black)
-            .environment(\.isDarkMode, isDarkMode)
 
-            // MenuView
-            if isMenuVisible == true || isMenuAnimating {
-                Color.black.opacity(0.5)
-                    .edgesIgnoringSafeArea(.all)
-                    .onTapGesture {
-                        // Start the animation
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            isMenuAnimating = true
-                        }
-
-                        // Delay hiding the menu to allow the animation to complete
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // Match this to the animation duration
-                            isMenuVisible = false
-                            isMenuAnimating = false // Reset the animation state
-                        }
+                    if selectedTab == .home {
+                        HomeView(
+                            selectedTab: Binding(
+                                get: { selectedTab ?? .home },
+                                set: { selectedTab = $0 }
+                            ),
+                            isMenuVisible: Binding(
+                                get: { isMenuVisible ?? false },
+                                set: { isMenuVisible = $0 }
+                            )
+                        )
+                    } else if selectedTab == .market {
+                        MarketDataView(
+                            selectedTab: Binding(
+                                get: { selectedTab ?? .home },
+                                set: { selectedTab = $0 }
+                            ),
+                            isMenuVisible: Binding(
+                                get: { isMenuVisible ?? false },
+                                set: { isMenuVisible = $0 }
+                            )
+                        )
                     }
+                }
+                .background(isDarkMode ? Color.white : Color.black)
+                .environment(\.isDarkMode, isDarkMode)
 
-                MenuView(isMenuVisible: $isMenuVisible)
-                    .frame(maxWidth: .infinity, alignment: .bottom)
-                    .offset(y: isMenuAnimating ? 600 : 300) // Slide down animation
-                    .animation(.easeInOut(duration: 0.3), value: isMenuAnimating) // Trigger animation based on isMenuAnimating
-                    .edgesIgnoringSafeArea(.bottom) // Ensure it stays at the bottom
-                    .transition(.move(edge: .bottom)) // Transition for the menu
+                if isMenuVisible == true || isMenuAnimating {
+                    Color.black.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                isMenuAnimating = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                isMenuVisible = false
+                                isMenuAnimating = false
+                            }
+                        }
+
+                    MenuView(isMenuVisible: $isMenuVisible, isLoggedIn: $isLoggedIn, isDarkMode: $isDarkMode)
+                        .frame(maxWidth: .infinity, alignment: .bottom)
+                        .offset(y: isMenuAnimating ? 600 : 300)
+                        .animation(.easeInOut(duration: 0.3), value: isMenuAnimating)
+                        .edgesIgnoringSafeArea(.bottom)
+                        .transition(.move(edge: .bottom))
+                }
             }
         }
     }

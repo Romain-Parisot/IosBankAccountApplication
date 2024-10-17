@@ -9,11 +9,9 @@ struct LoginView: View {
     @State private var isMenuVisible: Bool? = false
 
     var body: some View {
-        // Use NavigationStack outside of the LoginView
         if isLoggedIn {
-            // When logged in, navigate directly to MainView without a back button
-            MainView(selectedTab: $selectedTab, isMenuVisible: $isMenuVisible)
-                .navigationBarBackButtonHidden(true) // Hide the back button
+            MainView(selectedTab: $selectedTab, isMenuVisible: $isMenuVisible, isLoggedIn: $isLoggedIn)
+                .navigationBarBackButtonHidden(true)
                 .transition(.move(edge: .trailing))
         } else {
             NavigationStack {
@@ -53,13 +51,13 @@ struct LoginView: View {
                     }
                     .padding(.horizontal, 32)
 
-                    // NavigationLink updated to pass parameters to MainView
-                    NavigationLink(destination: MainView(selectedTab: $selectedTab, isMenuVisible: $isMenuVisible), isActive: $isLoggedIn) {
+                    NavigationLink(destination: MainView(selectedTab: $selectedTab, isMenuVisible: $isMenuVisible, isLoggedIn: $isLoggedIn), isActive: $isLoggedIn) {
                         EmptyView()
                     }
 
+
                     Button(action: {
-                        // Check if the email and password fields are filled
+                        // This will check if the email and password fields are filled, i did not have retricted to a specific value to make it user friendly while testing
                         if email.isEmpty || password.isEmpty {
                             showError = true
                         } else {

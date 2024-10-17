@@ -73,8 +73,8 @@ class CryptoDataService: ObservableObject {
 struct MarketDataView: View {
     @Environment(\.isDarkMode) private var isDarkMode
     @StateObject private var cryptoDataService = CryptoDataService()
-    @Binding var selectedTab: Tab? // Change to Tab?
-    @Binding var isMenuVisible: Bool? // Change to Bool?
+    @Binding var selectedTab: Tab?
+    @Binding var isMenuVisible: Bool?
 
     var body: some View {
         NavigationView {
@@ -116,7 +116,7 @@ struct MarketDataView: View {
                             }
                         }
                         .padding(.vertical, 8)
-                        .listRowBackground(isDarkMode ? Color.white : Color.black) // This sets the row background color
+                        .listRowBackground(isDarkMode ? Color.white : Color.black)
                     }
                     .listStyle(PlainListStyle())
                 } else {
@@ -136,14 +136,13 @@ struct MarketDataView: View {
 
 #Preview {
     Group {
-        // Dummy State variable for the preview
         @State var isMenuVisible: Bool? = false
         
         MarketDataView(selectedTab: .constant(Tab.market), isMenuVisible: $isMenuVisible)
-            .environment(\.isDarkMode, false) // Preview in light mode
+            .environment(\.isDarkMode, false)
         
         MarketDataView(selectedTab: .constant(Tab.market), isMenuVisible: $isMenuVisible)
-            .environment(\.isDarkMode, true) // Preview in dark mode
+            .environment(\.isDarkMode, true)
     }
 }
 

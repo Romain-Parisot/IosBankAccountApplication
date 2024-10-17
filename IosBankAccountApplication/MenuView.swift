@@ -2,93 +2,98 @@ import SwiftUI
 
 struct MenuView: View {
     @Binding var isMenuVisible: Bool?
+    @Binding var isLoggedIn: Bool
+    @Binding var isDarkMode: Bool
     
-    // State variable to handle dragging
     @State private var dragOffset: CGFloat = 0
+    
+    private var primaryColor: Color {
+        isDarkMode ? .black : .white
+    }
+
+    private var secondaryColor: Color {
+        isDarkMode ? .white : .black
+    }
 
     var body: some View {
         VStack(spacing: 20) {
             Button(action: {
-                // Action for option 1
-                print("Option 1 tapped")
-                isMenuVisible = false // Close menu
+                print(isDarkMode)
+                isMenuVisible = false
             }) {
-                Text("Option 1")
+                Text("Available on the next release")
                     .frame(maxWidth: .infinity)
-                    .padding(.horizontal) // Add horizontal padding for spacing
-                    .padding(.vertical) // Optional vertical padding
-                    .background(Color.blue)
-                    .foregroundColor(.white)
+                    .padding(.horizontal)
+                    .padding(.vertical)
+                    .foregroundColor(primaryColor)
+                    .background(.gray)
                     .cornerRadius(10)
             }
+            .disabled(true)
 
             Button(action: {
-                // Action for option 2
-                print("Option 2 tapped")
-                isMenuVisible = false // Close menu
-            }) {
-                Text("Option 2")
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal) // Add horizontal padding for spacing
-                    .padding(.vertical) // Optional vertical padding
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
+                 isDarkMode.toggle()
+                isMenuVisible = false
+
+                 UIApplication.shared.windows.first?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+             }) {
+                 Text(isDarkMode ? "Disable Dark Mode" : "Enable Dark Mode")
+                     .frame(maxWidth: .infinity)
+                     .padding(.horizontal)
+                     .padding(.vertical)
+                     .foregroundColor(primaryColor)
+                     .background(secondaryColor)
+                     .cornerRadius(10)
+             }
 
             Button(action: {
-                // Action for option 3
-                print("Option 3 tapped")
-                isMenuVisible = false // Close menu
+                isLoggedIn = false
+                isMenuVisible = false
             }) {
-                Text("Option 3")
+                Text("Logout")
                     .frame(maxWidth: .infinity)
-                    .padding(.horizontal) // Add horizontal padding for spacing
-                    .padding(.vertical) // Optional vertical padding
-                    .background(Color.blue)
-                    .foregroundColor(.white)
+                    .padding(.horizontal)
+                    .padding(.vertical)
+                    .foregroundColor(primaryColor)
+                    .background(secondaryColor)
                     .cornerRadius(10)
             }
         }
         .padding()
-        .frame(height: 254) // Fixed height for the menu
-        .background(Color.gray.opacity(0.8))
+        .frame(height: 254)
+        .background(primaryColor)
         .cornerRadius(16, corners: [.topLeft, .topRight]) // Rounded corners only at the top
         .shadow(radius: 10)
-        .padding(.horizontal, 8) // 8px from the sides
-        .offset(y: dragOffset) // Adjust position based on drag offset
+        .padding(.horizontal, 8)
+        .offset(y: dragOffset)
         .gesture(
             DragGesture()
                 .onChanged { value in
-                    // Update the drag offset based on the drag distance
                     if value.translation.height > 0 { // Only allow dragging down
                         dragOffset = value.translation.height
                     }
                 }
                 .onEnded { value in
-                    // Close the menu if dragged down sufficiently
-                    if value.translation.height > 100 { // Threshold to close
+                    // Close the menu if dragged down enought
+                    if value.translation.height > 100 {
                         withAnimation {
                             isMenuVisible = false
                         }
                     }
-                    // Reset the offset after dragging ends
                     dragOffset = 0
                 }
         )
         .transition(.move(edge: .bottom))
-        .animation(.easeInOut, value: isMenuVisible) // Animation based on visibility
+        .animation(.easeInOut, value: isMenuVisible)
     }
 }
 
 extension View {
-    // Custom modifier to round specific corners
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorners(radius: radius, corners: corners))
     }
 }
 
-// Custom shape to round specific corners
 struct RoundedCorners: Shape {
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = []

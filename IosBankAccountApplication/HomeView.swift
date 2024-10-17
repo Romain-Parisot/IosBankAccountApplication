@@ -8,14 +8,18 @@ struct HomeView: View {
     @State private var menuHeight: CGFloat = 150
 
     // Generate random transactions
-    let transactions: [Int] = (0..<3).map { _ in Int.random(in: -1000...1000) }
+    let transactions: [Transaction] = (0..<3).map { _ in
+        let amount = Int.random(in: -1000...1000)
+        let category = TransactionCategory.allCases.randomElement()!
+        let date = Date.random(in: Date().addingTimeInterval(-30 * 24 * 60 * 60)...Date()) // Random date within the last month
+        return Transaction(amount: amount, category: category, date: date)
+    }
 
     // Generate random values for income, spending, and investing
     let income: Int = Int.random(in: 1000...5000)
     let spending: Int = Int.random(in: 1000...3000)
     let investing: Int = Int.random(in: 500...2000)
 
-    // Define primary and secondary colors
     private var primaryColor: Color {
         isDarkMode ? .black : .white
     }
@@ -39,15 +43,14 @@ struct HomeView: View {
     }
 
     var body: some View {
-        ScrollView { // Make the view scrollable
+        ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Welcome message
                 Text("Welcome back, Romain!")
                     .font(.title)
                     .foregroundColor(primaryColor)
                     .padding(.leading, 16)
 
-                // Cash Available Section
+                // Cash  Section
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Cash Available")
                         .font(.headline)
@@ -70,7 +73,7 @@ struct HomeView: View {
                     .font(.headline)
                     .foregroundColor(primaryColor)
                     .padding(.horizontal, 16)
-                    .padding(.top, 16) // Add space above
+                    .padding(.top, 16)
 
                 GeometryReader { geometry in
                     let maxCircleSize: CGFloat = 140
@@ -134,28 +137,29 @@ struct HomeView: View {
                     .frame(maxHeight: 120)
                     .padding(.horizontal, 16)
                 }
-                .frame(height: 200) // Fixed height for the GeometryReader
+                .frame(height: 200)
 
-                // Add space below the circles
                 .padding(.bottom, 16)
 
                 // Transactions section
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Transactions")
+                    Text("Recent Transactions")
                         .font(.headline)
                         .foregroundColor(primaryColor)
 
-                    ForEach(transactions.indices, id: \.self) { index in
+                    ForEach(transactions) { transaction in
                         HStack {
-                            Text("Transaction \(index + 1)")
+                            Image(systemName: transaction.category.icon)
+                                .foregroundColor(transactionColor(for: transaction.amount))
+                            Text(transaction.category.rawValue)
                                 .font(.body)
                                 .foregroundColor(primaryColor)
 
                             Spacer()
 
-                            Text(String(format: "$%d", transactions[index]))
+                            Text(String(format: "$%d", transaction.amount))
                                 .font(.body)
-                                .foregroundColor(transactionColor(for: transactions[index]))
+                                .foregroundColor(transactionColor(for: transaction.amount))
                         }
                     }
 
@@ -195,5 +199,15 @@ struct HomeView: View {
 
     private func transactionColor(for amount: Int) -> Color {
         amount < 0 ? .red : .green
+    }
+}
+
+// Function to generate random dates for transactions
+extension Date {
+    static func random(in range: ClosedRange<Date>) -> Date {
+        let minTimeInterval = range.lowerBound.timeIntervalSince1970
+        let maxTimeInterval = range.upperBound.timeIntervalSince1970
+        let randomTimeInterval = TimeInterval.random(in: minTimeInterval...maxTimeInterval)
+        return Date(timeIntervalSince1970: randomTimeInterval)
     }
 }

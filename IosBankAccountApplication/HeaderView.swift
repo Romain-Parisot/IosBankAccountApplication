@@ -3,7 +3,16 @@ import SwiftUI
 struct HeaderView: View {
     @Binding var selectedTab: Tab?
     @Binding var isMenuVisible: Bool?
-    var isDarkMode: Bool
+    @Binding var isDarkMode: Bool
+    
+    private var primaryColor: Color {
+        
+        isDarkMode ? .white : .black
+    }
+
+    private var secondaryColor: Color {
+        isDarkMode ? .black : .white
+    }
 
     var body: some View {
         VStack {
@@ -17,7 +26,7 @@ struct HeaderView: View {
 
                 Button(action: {
                     withAnimation {
-                        isMenuVisible?.toggle() // Use optional chaining for toggling
+                        isMenuVisible?.toggle()
                     }
                 }) {
                     Text("R")
@@ -30,29 +39,26 @@ struct HeaderView: View {
                 }
             }
 
-            // Tab Bar with Home and Market
             HStack {
-                // Home Tab
                 Button(action: {
-                    selectedTab = .home // Set selectedTab to home
+                    selectedTab = .home
                 }) {
                     Text("Home")
                         .font(.headline)
-                        .foregroundColor(selectedTab == .home ? Color.black : Color.white)
+                        .foregroundColor(selectedTab == .home ? primaryColor : secondaryColor)
                         .padding()
-                        .background(selectedTab == .home ? Color.white : Color.clear)
+                        .background(selectedTab == .home ? secondaryColor : primaryColor)
                         .cornerRadius(10)
                 }
 
-                // Market Tab
                 Button(action: {
-                    selectedTab = .market // Set selectedTab to market
+                    selectedTab = .market
                 }) {
                     Text("Market")
                         .font(.headline)
-                        .foregroundColor(selectedTab == .market ? Color.black : Color.white)
+                        .foregroundColor(selectedTab == .market ? primaryColor : secondaryColor)
                         .padding()
-                        .background(selectedTab == .market ? Color.white : Color.clear)
+                        .background(selectedTab == .market ? secondaryColor : primaryColor)
                         .cornerRadius(10)
                 }
             }
