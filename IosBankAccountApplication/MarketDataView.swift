@@ -73,16 +73,12 @@ class CryptoDataService: ObservableObject {
 struct MarketDataView: View {
     @Environment(\.isDarkMode) private var isDarkMode
     @StateObject private var cryptoDataService = CryptoDataService()
-
-    @State private var isMenuVisible = false
-    @State private var selectedTab: Tab = .market // Use the shared Tab enum
+    @Binding var selectedTab: Tab? // Change to Tab?
+    @Binding var isMenuVisible: Bool? // Change to Bool?
 
     var body: some View {
         NavigationView {
             VStack {
-                // Header with logo, profile button, and tabs
-                HeaderView(selectedTab: $selectedTab, isMenuVisible: $isMenuVisible, isDarkMode: isDarkMode)
-
                 Text("Top 100 Cryptocurrencies")
                     .font(.largeTitle)
                     .bold()
@@ -104,7 +100,7 @@ struct MarketDataView: View {
                                     .foregroundColor(isDarkMode ? .black : .white)
                                 Text(crypto.symbol)
                                     .font(.subheadline)
-                                    .foregroundColor(isDarkMode ? .gray : .white)
+                                    .foregroundColor(isDarkMode ? .black : .gray)
                             }
                             Spacer()
                             VStack(alignment: .trailing) {
@@ -113,14 +109,14 @@ struct MarketDataView: View {
                                     .foregroundColor(isDarkMode ? .black : .white)
                                 Text("Mkt Cap: $\(String(format: "%.0f", crypto.marketCap))")
                                     .font(.caption)
-                                    .foregroundColor(isDarkMode ? .gray : .white)
+                                    .foregroundColor(isDarkMode ? .black : .gray)
                                 Text("24h: \(String(format: "%.2f%%", crypto.percentChange24h))")
                                     .foregroundColor(crypto.percentChange24h > 0 ? .green : .red)
                                     .font(.caption)
                             }
                         }
                         .padding(.vertical, 8)
-                        .listRowBackground(isDarkMode ? Color.white : Color.black)
+                        .listRowBackground(isDarkMode ? Color.white : Color.black) // This sets the row background color
                     }
                     .listStyle(PlainListStyle())
                 } else {
@@ -129,19 +125,29 @@ struct MarketDataView: View {
                         .foregroundColor(.red)
                 }
             }
+            .background(isDarkMode ? Color.white : Color.black)
             .onAppear {
                 cryptoDataService.fetchCryptoData()
             }
-            .background(isDarkMode ? Color.white : Color.black)
         }
         .navigationBarTitle("Market Data", displayMode: .inline)
-        .foregroundColor(isDarkMode ? .black : .white)
-        .background(Color.black.edgesIgnoringSafeArea(.all))
     }
 }
+
 #Preview {
-    MarketDataView()
+    Group {
+        // Dummy State variable for the preview
+        @State var isMenuVisible: Bool? = false
+        
+        MarketDataView(selectedTab: .constant(Tab.market), isMenuVisible: $isMenuVisible)
+            .environment(\.isDarkMode, false) // Preview in light mode
+        
+        MarketDataView(selectedTab: .constant(Tab.market), isMenuVisible: $isMenuVisible)
+            .environment(\.isDarkMode, true) // Preview in dark mode
+    }
 }
+
+
 
 struct CMCResponse: Codable {
     let data: [CryptoData]

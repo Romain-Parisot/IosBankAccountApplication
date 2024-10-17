@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @Binding var selectedTab: Tab
-    @Binding var isMenuVisible: Bool
+    @Binding var selectedTab: Tab?
+    @Binding var isMenuVisible: Bool?
     var isDarkMode: Bool
 
     var body: some View {
@@ -17,7 +17,7 @@ struct HeaderView: View {
 
                 Button(action: {
                     withAnimation {
-                        isMenuVisible.toggle()
+                        isMenuVisible?.toggle() // Use optional chaining for toggling
                     }
                 }) {
                     Text("R")
@@ -30,9 +30,11 @@ struct HeaderView: View {
                 }
             }
 
+            // Tab Bar with Home and Market
             HStack {
+                // Home Tab
                 Button(action: {
-                    selectedTab = .home // Set the selected tab to home
+                    selectedTab = .home // Set selectedTab to home
                 }) {
                     Text("Home")
                         .font(.headline)
@@ -42,7 +44,10 @@ struct HeaderView: View {
                         .cornerRadius(10)
                 }
 
-                NavigationLink(destination: MarketDataView()) {
+                // Market Tab
+                Button(action: {
+                    selectedTab = .market // Set selectedTab to market
+                }) {
                     Text("Market")
                         .font(.headline)
                         .foregroundColor(selectedTab == .market ? Color.black : Color.white)
@@ -53,5 +58,6 @@ struct HeaderView: View {
             }
             .padding(.horizontal, 16)
         }
+        .background(isDarkMode ? Color.white : Color.black)
     }
 }
